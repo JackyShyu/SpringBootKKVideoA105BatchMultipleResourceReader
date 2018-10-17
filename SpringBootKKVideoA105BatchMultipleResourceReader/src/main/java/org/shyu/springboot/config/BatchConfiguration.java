@@ -36,13 +36,12 @@ public class BatchConfiguration {
     //@Autowired
     //public DataSource dataSource;
     
-    @Value(value="input/person_*.csv")
+    @Value(value="input/persons_*.csv")
     private Resource[] resources;
-
+    
     @Bean
     public FlatFileItemReader<Person> reader() {
         FlatFileItemReader<Person> reader = new FlatFileItemReader<Person>();
-        reader.setResource(new ClassPathResource("persons.csv"));
         reader.setLineMapper(new DefaultLineMapper<Person>() {{
             setLineTokenizer(new DelimitedLineTokenizer() {{
                 setNames(new String[] { "firstName", "lastName","email","age" });
@@ -52,7 +51,8 @@ public class BatchConfiguration {
             }});
         }});
         return reader;
-    }
+}
+    
     
     @Bean
     public MultiResourceItemReader<Person> multiResourceItemReader(){
